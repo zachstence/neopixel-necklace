@@ -1,92 +1,60 @@
-# SPDX-FileCopyrightText: 2017 Mikey Sklar for Adafruit Industries
+# SPDX-FileCopyrightText: 2018 Kattni Rembor for Adafruit Industries
 #
 # SPDX-License-Identifier: MIT
 
+"""CircuitPython Essentials NeoPixel example"""
 import time
-from rainbowio import colorwheel
 import board
+from rainbowio import colorwheel
 import neopixel
 
-pixpin = board.D1
-numpix = 23
+pixel_pin = board.D1
+num_pixels = 23
 
-pixels = neopixel.NeoPixel(pixpin, numpix, brightness=0.05, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.03, auto_write=False)
 
-rgb_colors = ([179, 0, 0],
-              [0, 179, 0],
-              [0, 0, 0])
 
-rgb_idx = 0  # index counter - primary color we are on
-color = (0, 164, 179)  # Starting color
-mode = 0  # Current animation effect
-offset = 0
-prevtime = 0
+def color_chase(color, wait):
+    for i in range(num_pixels):
+        pixels[i] = color
+        time.sleep(wait)
+        pixels.show()
+    time.sleep(0.5)
 
 
 def rainbow_cycle(wait):
-    for j in range(255 * 6):  # 6 cycles of all colors on colorwheel
-        for r in range(len(pixels)):
-            idx = int((r * 255 / len(pixels)) + j)
-            pixels[r] = colorwheel(idx & 255)
-        pixels.write()
-        time.sleep(wait)
-
-
-def rainbow(wait):
     for j in range(255):
-        for index in range(len(pixels)):
-            idx = int(index + j)
-            pixels[index] = colorwheel(idx & 255)
-        pixels.write()
+        for i in range(num_pixels):
+            rc_index = (i * 256 // num_pixels) + j
+            pixels[i] = colorwheel(rc_index & 255)
+        pixels.show()
         time.sleep(wait)
 
 
-def rainbow_cycle_slow(wait):
-    for j in range(255 * 3):  # 3 cycles of all colors on colorwheel
-        for r in range(len(pixels)):
-            idx = int((r * 255 / len(pixels)) + j)
-            pixels[r] = colorwheel(idx & 255)
-        pixels.write()
-        time.sleep(wait)
-
-
-def rainbow_hold(wait):
-    for j in range(255 * 1):  # 3 cycles of all colors on colorwheel
-        for r in range(len(pixels)):
-            idx = int((r * 255 / len(pixels)) + j)
-            pixels[r] = colorwheel(idx & 255)
-    pixels.write()
-    time.sleep(wait)
-
+RED = (255, 0, 0)
+YELLOW = (255, 150, 0)
+GREEN = (0, 255, 0)
+CYAN = (0, 255, 255)
+BLUE = (0, 0, 255)
+PURPLE = (180, 0, 255)
 
 while True:
+    pixels.fill(RED)
+    pixels.show()
+    # Increase or decrease to change the speed of the solid color change.
+    time.sleep(1)
+    pixels.fill(GREEN)
+    pixels.show()
+    time.sleep(1)
+    pixels.fill(BLUE)
+    pixels.show()
+    time.sleep(1)
 
-    if mode == 0:  # rainbow hold
-        rainbow_hold(0.02)
-        time.sleep(.5)
+    color_chase(RED, 0.1)  # Increase the number to slow down the color chase
+    color_chase(YELLOW, 0.1)
+    color_chase(GREEN, 0.1)
+    color_chase(CYAN, 0.1)
+    color_chase(BLUE, 0.1)
+    color_chase(PURPLE, 0.1)
 
-    elif mode == 1:  # rainbow cycle slow
-        rainbow_cycle_slow(0.02)
-        time.sleep(0.05)
-
-    elif mode == 2:  # rainbow cycle fast
-        rainbow_cycle(0.005)
-        time.sleep(0.050)
-
-    t = time.monotonic()
-
-    if (t - prevtime) > 8:  # Every 8 seconds...
-        mode += 1  # Next mode
-        if mode > 2:  # End of modes?
-            mode = 0  # Start modes over
-
-        if rgb_idx > 2:  # reset R-->G-->B rotation
-            rgb_idx = 0
-
-        color = rgb_colors[rgb_idx]  # next color assignment
-        rgb_idx += 1
-
-        for i in range(numpix):
-            pixels[i] = (0, 0, 0)
-
-        prevtime = t
+    rainbow_cycle(0)  # Increase the number to slow down the rainbow
