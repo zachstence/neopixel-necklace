@@ -39,30 +39,42 @@ BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
 OFF = (0, 0, 0, 0)
 
-outer_active = 0
-inner_active = 0
+# outer_active = 0
+# inner_active = 0
+
+# while True:
+#     for i in range(len(OUTER_RING)):
+#         if i == outer_active:
+#             OUTER_RING[i] = CYAN
+#         else:
+#             OUTER_RING[i] = OFF
+    
+#     outer_active = (outer_active + 1) % len(OUTER_RING)
+        
+#     for i in range(len(INNER_RING)):
+#         if i == inner_active:
+#             INNER_RING[i] = PURPLE
+#         else:
+#             INNER_RING[i] = OFF
+    
+#     if outer_active == 7:
+#         CENTER[0] = BLUE
+#     if outer_active == 15:
+#         CENTER[0] = OFF
+
+#     inner_active = (inner_active + 1) % len(INNER_RING)
+    
+#     PIXELS.show()
+#     time.sleep(0.01)
+
+colors = [RED, YELLOW, GREEN, CYAN, BLUE, PURPLE]
+
+def fill_delay(color, delay):
+    for i in range(len(OUTER_RING)):
+        OUTER_RING[i] = color
+        OUTER_RING.show()
+        time.sleep(delay)
 
 while True:
-    for i in range(len(OUTER_RING)):
-        if i == outer_active:
-            OUTER_RING[i] = CYAN
-        else:
-            OUTER_RING[i] = OFF
-    
-    outer_active = (outer_active + 1) % len(OUTER_RING)
-        
-    for i in range(len(INNER_RING)):
-        if i == inner_active:
-            INNER_RING[i] = PURPLE
-        else:
-            INNER_RING[i] = OFF
-    
-    if outer_active == 7:
-        CENTER[0] = BLUE
-    if outer_active == 15:
-        CENTER[0] = OFF
-
-    inner_active = (inner_active + 1) % len(INNER_RING)
-    
-    PIXELS.show()
-    time.sleep(0.01)
+    for color in colors:
+        fill_delay(color, 0.05)
