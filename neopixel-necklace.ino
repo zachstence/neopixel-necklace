@@ -1,7 +1,8 @@
 #include "FastLED.h"
 
-#define NUM_LEDS 23
-#define LEDS_PIN 1
+#include "config.h"
+#include "SolidColor.h"
+#include "SinBounce.h"
 
 CRGB _leds[NUM_LEDS];
 
@@ -23,24 +24,11 @@ void setup() {
     FastLED.show();
 }
 
-uint8_t c = 0;
-uint8_t dimBy = 70;
+SolidColor solidColor = SolidColor(outer, CRGB(255, 0, 0));
 
-void fadeBrightnessBy(CRGBSet leds, uint8_t fadeBy) {
-    for (auto &led : leds) {
-        auto hsv = rgb2hsv_approximate(led);
-        auto newV = max(0, hsv.v - fadeBy);
-        led = CHSV(hsv.h, hsv.s, newV);
-    }
-}
+SinBounce sinBounce = SinBounce(outer, CHSV(100, 255, 255));
 
 void loop() {
-    auto top = 10;
-
-    auto loops = 4;
-    uint8_t sinBeat = beatsin8(15, 0, outer.len * loops, 0, 0);
-    auto i = (sinBeat + top) % outer.len;
-    outer[i] = outerColor;
-    fadeBrightnessBy(outer, 5);
-    FastLED.show();
+    // sinBounce.run();
+    solidColor.run();
 }
