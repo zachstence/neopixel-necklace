@@ -1,0 +1,6 @@
+{
+    "sketch": "neopixel-necklace.ino",
+    "configuration": "opt=small,usbstack=arduino,debug=off",
+    "board": "adafruit:samd:adafruit_gemma_m0",
+    "port": "COM6"
+}
