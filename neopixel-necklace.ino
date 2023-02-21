@@ -10,7 +10,7 @@ CRGBSet outer(leds(0, 15));
 CRGBSet center(leds(16, 16));
 CRGBSet inner(leds(17, 22));
 
-auto outerColor = CHSV(40, 255, 255);
+auto outerColor = CHSV(120, 255, 255);
 auto innerColor = CHSV(100, 255, 255);
 auto centerColor = CHSV(160, 255, 255);
 
@@ -26,27 +26,21 @@ void setup() {
 uint8_t c = 0;
 uint8_t dimBy = 70;
 
+void fadeBrightnessBy(CRGBSet leds, uint8_t fadeBy) {
+    for (auto &led : leds) {
+        auto hsv = rgb2hsv_approximate(led);
+        auto newV = max(0, hsv.v - fadeBy);
+        led = CHSV(hsv.h, hsv.s, newV);
+    }
+}
+
 void loop() {
-    for (auto i = 0; i < outer.len; i++) {
-        uint8_t v = max(0, outerColor.v - i * dimBy);
-        auto _i = (i + c) % outer.len;
-        auto color = CHSV(outerColor.h, outerColor.s, v);
-        outer[_i] = color;
-    }
+    auto top = 10;
 
-    for (auto i = 0; i < inner.len; i++) {
-        uint8_t v = max(0, innerColor.v - i * dimBy);
-        auto _i = (i + c + 255) % inner.len;
-        auto color = CHSV(innerColor.h, innerColor.s, v);
-        inner[_i] = color;
-    }
-
-    auto centerOffset = c % 30;
-    auto centerV = max(0, centerColor.v - centerOffset * 10);
-    auto color = CHSV(centerColor.h, centerColor.s, centerV);
-    center = color;
-
-    c--;
+    auto loops = 4;
+    uint8_t sinBeat = beatsin8(15, 0, outer.len * loops, 0, 0);
+    auto i = (sinBeat + top) % outer.len;
+    outer[i] = outerColor;
+    fadeBrightnessBy(outer, 5);
     FastLED.show();
-    delay(50);
 }
