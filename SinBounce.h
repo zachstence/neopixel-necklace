@@ -11,10 +11,11 @@ public:
     void run();
 
 protected:
+    CRGBSet leds;
     CHSV color;
 };
 
-SinBounce::SinBounce(CRGBSet leds, CHSV color) : Pattern(leds), color(color) {}
+SinBounce::SinBounce(CRGBSet leds, CHSV color) : leds(leds), color(color) {}
 
 void SinBounce::run() {
     auto top = 10;

@@ -11,10 +11,11 @@ public:
     void run();
 
 private:
+    CRGBSet leds;
     CRGB color;
 };
 
-SolidColor::SolidColor(CRGBSet leds, CRGB color) : Pattern(leds), color(color) {}
+SolidColor::SolidColor(CRGBSet leds, CRGB color) : leds(leds), color(color) {}
 
 void SolidColor::run() {
     this->leds.fill_solid(color);
