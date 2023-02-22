@@ -24,11 +24,10 @@ void setup() {
     FastLED.show();
 }
 
-SolidColor solidColor = SolidColor(outer, CRGB(255, 0, 0));
-
-SinBounce sinBounce = SinBounce(outer, CHSV(100, 255, 255));
+SinBounce outerSinBounce = SinBounce(outer, CHSV(100, 255, 255));
+SinBounce innerSinBounce = SinBounce(inner, CHSV(200, 255, 255));
 
 void loop() {
-    // sinBounce.run();
-    solidColor.run();
+    outerSinBounce.run();
+    innerSinBounce.run();
 }
