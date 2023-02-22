@@ -2,7 +2,6 @@
 
 ## Pattern Ideas
 - Random twinkling
-- Pulsing from middle
 - Breathing
 - SinBounce but change color every time it changes direction
 - Constant speed spinning rings
