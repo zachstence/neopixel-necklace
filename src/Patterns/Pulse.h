@@ -1,7 +1,7 @@
 #include "FastLED.h"
 
-#include "utils.h"
-#include "Direction.h"
+#include "../utils.h"
+#include "../Direction.h"
 
 class Pulse {
 public:

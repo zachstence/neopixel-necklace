@@ -2,7 +2,7 @@
 #include "FastLED.h"
 
 #include "Pattern.h"
-#include "utils.h"
+#include "../utils.h"
 
 class SinBounce : Pattern {
 public:

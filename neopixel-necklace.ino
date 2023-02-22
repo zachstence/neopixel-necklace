@@ -1,11 +1,11 @@
 #include "FastLED.h"
 
-#include "config.h"
+#include "src/config.h"
 
-#include "Direction.h"
-#include "SolidColor.h"
-#include "SinBounce.h"
-#include "Pulse.h"
+#include "src/Direction.h"
+#include "src/Patterns/SolidColor.h"
+#include "src/Patterns/SinBounce.h"
+#include "src/Patterns/Pulse.h"
 
 CRGB _leds[NUM_LEDS];
 
@@ -25,7 +25,7 @@ void setup() {
 
 CRGBSet zones[] = {center, inner, outer};
 
-Pulse pulse = Pulse(zones, 3, CHSV(234, 255, 255), Direction::Forward);
+Pulse pulse = Pulse(zones, 3, CHSV(150, 255, 255), Direction::Forward);
 
 void loop() {
     pulse.run();
