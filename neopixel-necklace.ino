@@ -2,6 +2,7 @@
 
 #include "config.h"
 
+#include "Direction.h"
 #include "SolidColor.h"
 #include "SinBounce.h"
 #include "Pulse.h"
@@ -24,7 +25,7 @@ void setup() {
 
 CRGBSet zones[] = {center, inner, outer};
 
-Pulse pulse = Pulse(zones, 3, CHSV(234, 255, 255));
+Pulse pulse = Pulse(zones, 3, CHSV(234, 255, 255), Direction::Forward);
 
 void loop() {
     pulse.run();

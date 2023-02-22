@@ -1,10 +1,16 @@
 #include "FastLED.h"
 
 #include "utils.h"
+#include "Direction.h"
 
 class Pulse {
 public:
-    Pulse(CRGBSet *zones, uint8_t numZones, CHSV color): zones(zones), numZones(numZones), color(color) {}
+    Pulse(CRGBSet *zones, uint8_t numZones, CHSV color, Direction direction):
+        zones(zones),
+        numZones(numZones),
+        color(color),
+        direction(direction)
+    {}
 
     void run() {
         for (auto i = 0; i < this->numZones; i++) {
@@ -18,7 +24,8 @@ public:
                 v = 0;
             }
 
-            this->zones[i] = CHSV(this->color.h, this->color.s, v);
+            auto _i = this->direction == Forward ? i : (this->numZones - 1) - i;
+            this->zones[_i] = CHSV(this->color.h, this->color.s, v);
         }
 
         FastLED.show();
@@ -28,6 +35,7 @@ protected:
     CRGBSet *zones;
     uint8_t numZones;
     CHSV color;
+    Direction direction;
 
 private:
     // Controls how fast the pattern plays (beats per minute)
