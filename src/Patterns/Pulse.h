@@ -2,14 +2,22 @@
 
 #include "../utils.h"
 #include "../Direction.h"
+#include "Pattern.h"
 
-class Pulse {
+class Pulse : Pattern {
 public:
-    Pulse(CRGBSet *zones, uint8_t numZones, CHSV color, Direction direction):
-        zones(zones),
-        numZones(numZones),
-        color(color),
-        direction(direction)
+    struct Opts {
+        CRGBSet *zones;
+        uint8_t numZones;
+        CHSV color;
+        Direction direction;
+    };
+
+    Pulse(Opts opts):
+        zones(opts.zones),
+        numZones(opts.numZones),
+        color(opts.color),
+        direction(opts.direction)
     {}
 
     void run() {

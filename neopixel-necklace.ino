@@ -3,6 +3,7 @@
 #include "src/config.h"
 
 #include "src/Direction.h"
+#include "src/Patterns/Pattern.h"
 #include "src/Patterns/SolidColor.h"
 #include "src/Patterns/SinBounce.h"
 #include "src/Patterns/Pulse.h"
@@ -23,10 +24,28 @@ void setup() {
     FastLED.show();
 }
 
-CRGBSet zones[] = {center, inner, outer};
+SinBounce::Opts outerOpts = {
+    leds: outer,
+    color: CHSV(100, 255, 255),
+};
+SinBounce outerPattern = SinBounce(outerOpts);
 
-Pulse pulse = Pulse(zones, 3, CHSV(150, 255, 255), Direction::Forward);
+SinBounce::Opts innerOpts = {
+    leds: inner,
+    color: CHSV(150, 255, 255),
+};
+SinBounce innerPattern = SinBounce(innerOpts);
+
+Pulse::Opts centerOpts = {
+    zones: &center,
+    numZones: 1,
+    color: CHSV(200, 255, 255),
+    direction: Direction::Forward,
+};
+Pulse centerPattern = Pulse(centerOpts);
 
 void loop() {
-    pulse.run();
+    outerPattern.run();
+    innerPattern.run();
+    centerPattern.run();
 }
