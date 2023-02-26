@@ -9,6 +9,8 @@
 #include "src/Patterns/SinBounce.h"
 #include "src/Patterns/Pulse.h"
 
+uint8_t BRIGHTNESS = (BRIGHTNESS_PERCENT * 255) / 100;
+
 CRGB _leds[NUM_LEDS];
 
 CRGBSet leds(_leds, NUM_LEDS);
@@ -67,7 +69,7 @@ void initPatterns() {
 
 void setup() {
     FastLED.addLeds<NEOPIXEL, LEDS_PIN>(leds, NUM_LEDS);
-    FastLED.setBrightness(70);
+    FastLED.setBrightness(BRIGHTNESS);
 
     // Set up button
     // OneButton has no option for INPUT_PULLDOWN, so we have to override the pinMode after creating our OneButton

@@ -1,3 +1,4 @@
 #define NUM_LEDS 23
+#define BRIGHTNESS_PERCENT 5
 #define LEDS_PIN 1
 #define BUTTON_PIN 2
