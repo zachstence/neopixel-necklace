@@ -4,5 +4,7 @@
 
 class Pattern {
 public:
+    Pattern() {}
+
     virtual void run() = 0;
 };
