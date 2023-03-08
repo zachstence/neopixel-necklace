@@ -9,6 +9,7 @@
 #include "src/Patterns/SinBounce.h"
 #include "src/Patterns/Pulse.h"
 #include "src/Patterns/Rezz.h"
+#include "src/Patterns/Strobe.h"
 
 uint8_t BRIGHTNESS = (BRIGHTNESS_PERCENT * 255) / 100;
 
@@ -40,15 +41,12 @@ void setup() {
     FastLED.show();
 }
 
-CRGBSet zones[] = {center, inner, outer};
-
-Rezz::Opts opts = {
-    zones: zones,
-    numZones: 3,
-    onColor: CHSV(0, 255, 255),
-    offColor: CHSV(0, 255, 75),
+Strobe::Opts opts = {
+    leds: leds,
+    bpm: 1000,
+    color: CHSV(0, 0, 255),
 };
-Rezz pattern = Rezz(opts);
+Strobe pattern = Strobe(opts);
 
 void loop() {
     pattern.run();

@@ -4,7 +4,6 @@
 - Random twinkling
 - Breathing
 - SinBounce but change color every time it changes direction
-- Strobe
 - Rainbow spin
 - Rainbow vertical/horizontal slide
 - Sound reactive
