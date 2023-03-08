@@ -20,9 +20,9 @@ CRGBSet inner(leds(17, 22));
 
 OneButton button;
 
-CHSV outerColor = randomColor(255);
-CHSV innerColor = randomColor(255);
-CHSV centerColor = randomColor(255);
+CHSV outerColor = randomColor();
+CHSV innerColor = randomColor();
+CHSV centerColor = randomColor();
 
 SinBounce::Opts outerOpts = {
     leds: outer,
@@ -78,9 +78,9 @@ void setup() {
 
     button.attachClick([]() {
         Serial.println("Button clicked! Generating random colors");
-        outerColor = randomColor(255);
-        innerColor = randomColor(255);
-        centerColor = randomColor(255);
+        outerColor = randomColor();
+        innerColor = randomColor();
+        centerColor = randomColor();
         initPatterns();
     });
 

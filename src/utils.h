@@ -17,8 +17,7 @@ void fadeBrightnessBy(CRGBSet leds, uint8_t fadeBy) {
     }
 }
 
-CHSV randomColor(uint8_t v) {
+CHSV randomColor() {
     uint8_t h = random8();
-    uint8_t s = random8();
-    return CHSV(h, s, v);
+    return CHSV(h, 255, 255);
 }
