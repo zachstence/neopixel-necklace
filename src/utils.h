@@ -21,3 +21,15 @@ CHSV randomColor() {
     uint8_t h = random8();
     return CHSV(h, 255, 255);
 }
+
+// Recursive function to return gcd of a and b
+int gcd(int a, int b) {
+  if (b == 0)
+    return a;
+  return gcd(b, a % b);
+}
+ 
+// Function to return LCM of two numbers
+int lcm(int a, int b) {
+    return (a / gcd(a, b)) * b;
+}

@@ -8,6 +8,7 @@
 #include "src/Patterns/SolidColor.h"
 #include "src/Patterns/SinBounce.h"
 #include "src/Patterns/Pulse.h"
+#include "src/Patterns/Rezz.h"
 
 uint8_t BRIGHTNESS = (BRIGHTNESS_PERCENT * 255) / 100;
 
@@ -20,52 +21,6 @@ CRGBSet inner(leds(17, 22));
 
 OneButton button;
 
-CHSV outerColor = randomColor();
-CHSV innerColor = randomColor();
-CHSV centerColor = randomColor();
-
-SinBounce::Opts outerOpts = {
-    leds: outer,
-    color: outerColor,
-};
-SinBounce outerPattern = SinBounce(outerOpts);
-
-SinBounce::Opts innerOpts = {
-    leds: inner,
-    color: innerColor,
-};
-SinBounce innerPattern = SinBounce(innerOpts);
-
-Pulse::Opts centerOpts = {
-    zones: &center,
-    numZones: 1,
-    color: centerColor,
-    direction: Direction::Forward,
-};
-Pulse centerPattern = Pulse(centerOpts);
-
-void initPatterns() {
-    Serial.println("initPatterns called");
-    SinBounce::Opts outerOpts = {
-        leds: outer,
-        color: outerColor,
-    };
-    outerPattern = SinBounce(outerOpts);
-
-    SinBounce::Opts innerOpts = {
-        leds: inner,
-        color: innerColor,
-    };
-    innerPattern = SinBounce(innerOpts);
-
-    Pulse::Opts centerOpts = {
-        zones: &center,
-        numZones: 1,
-        color: centerColor,
-        direction: Direction::Forward,
-    };
-    centerPattern = Pulse(centerOpts);
-}
 
 void setup() {
     FastLED.addLeds<NEOPIXEL, LEDS_PIN>(leds, NUM_LEDS);
@@ -77,24 +32,26 @@ void setup() {
     pinMode(BUTTON_PIN, INPUT_PULLDOWN);
 
     button.attachClick([]() {
-        Serial.println("Button clicked! Generating random colors");
-        outerColor = randomColor();
-        innerColor = randomColor();
-        centerColor = randomColor();
-        initPatterns();
+        Serial.println("Button clicked!");
     });
 
     // Clear all LEDs
     leds.fill_solid(CRGB::Black);
     FastLED.show();
-
-    initPatterns();
 }
 
+CRGBSet zones[] = {center, inner, outer};
+
+Rezz::Opts opts = {
+    zones: zones,
+    numZones: 3,
+    onColor: CHSV(0, 255, 255),
+    offColor: CHSV(0, 255, 75),
+};
+Rezz pattern = Rezz(opts);
+
 void loop() {
-    outerPattern.run();
-    innerPattern.run();
-    centerPattern.run();
+    pattern.run();
 
     button.tick();
 }

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "*.dockerignore": "ignore",
+        "numeric": "cpp"
+    }
+}

@@ -4,9 +4,6 @@
 - Random twinkling
 - Breathing
 - SinBounce but change color every time it changes direction
-- Constant speed spinning rings
-- Spinning pie slice, multiple spinning slices
-- Rez-style spinning stripes / theater chase
 - Strobe
 - Rainbow spin
 - Rainbow vertical/horizontal slide
