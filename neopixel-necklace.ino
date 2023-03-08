@@ -10,6 +10,7 @@
 #include "src/Patterns/Pulse.h"
 #include "src/Patterns/Rezz.h"
 #include "src/Patterns/Strobe.h"
+#include "src/Patterns/Twinkle.h"
 
 uint8_t BRIGHTNESS = (BRIGHTNESS_PERCENT * 255) / 100;
 
@@ -21,7 +22,6 @@ CRGBSet center(leds(16, 16));
 CRGBSet inner(leds(17, 22));
 
 OneButton button;
-
 
 void setup() {
     FastLED.addLeds<NEOPIXEL, LEDS_PIN>(leds, NUM_LEDS);
@@ -41,12 +41,11 @@ void setup() {
     FastLED.show();
 }
 
-Strobe::Opts opts = {
+Twinkle::Opts opts = {
     leds: leds,
-    bpm: 1000,
     color: CHSV(0, 0, 255),
 };
-Strobe pattern = Strobe(opts);
+Twinkle pattern = Twinkle(opts);
 
 void loop() {
     pattern.run();

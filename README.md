@@ -1,7 +1,6 @@
 # neopixel-necklace
 
 ## Pattern Ideas
-- Random twinkling
 - Breathing
 - SinBounce but change color every time it changes direction
 - Rainbow spin
