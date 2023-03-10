@@ -21,11 +21,8 @@ public:
         }
     };
 
-    Twinkle(Opts opts):
-        leds(opts.leds),
-        color(opts.color)
-    {
-        Serial.println("new Twinkle()");
+    Twinkle(Opts opts): Pattern("Twinkle"), leds(opts.leds), color(opts.color) {
+        Serial.println("Twinkle()");
         this->specs = new TwinkleSpec[this->leds.len];
         for (auto i = 0; i < this->leds.len; i++) {
             this->specs[i] = this->randomTwinkleSpec();
@@ -33,6 +30,7 @@ public:
     }
 
     ~Twinkle() {
+        Serial.println("~Twinkle()");
         delete this->specs;
     }
 
