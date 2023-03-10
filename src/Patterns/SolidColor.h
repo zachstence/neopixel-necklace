@@ -15,10 +15,6 @@ public:
         Serial.println("SolidColor()");
     }
 
-    ~SolidColor() {
-        Serial.println("~SolidColor()");
-    }
-
     void run() override {
         EVERY_N_SECONDS(1) {
             Serial.println("SolidColor.run()");

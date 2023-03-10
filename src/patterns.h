@@ -5,6 +5,7 @@
 #include "leds.h"
 #include "Patterns/Pattern.h"
 #include "Patterns/SolidColor.h"
+#include "Patterns/Twinkle.h"
 
 typedef std::function<std::unique_ptr<Pattern>()> PatternFactory;
 
@@ -24,16 +25,8 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
         );
     },
     [] {
-        return make_unique<SolidColor>(
-            SolidColor::Opts {
-                leds,
-                color: CHSV(100, 255, 255),
-            }
-        );
-    },
-    [] {
-        return make_unique<SolidColor>(
-            SolidColor::Opts {
+        return make_unique<Twinkle>(
+            Twinkle::Opts {
                 leds,
                 color: CHSV(200, 255, 255),
             }

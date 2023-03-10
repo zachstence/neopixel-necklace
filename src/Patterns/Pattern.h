@@ -12,7 +12,7 @@ public:
         Serial.printf("Pattern() %s\n", this->name.c_str());
     }
 
-    ~Pattern() {
+    virtual ~Pattern() {
         Serial.printf("~Pattern() %s\n", this->name.c_str());
     }
 
