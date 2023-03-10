@@ -11,6 +11,9 @@ CRGBSet outer(leds(0, 15));
 CRGBSet center(leds(16, 16));
 CRGBSet inner(leds(17, 22));
 
+CRGBSet rings[] = {center, inner, outer};
+uint8_t numRings = 3;
+
 void setupLeds() {
     FastLED.addLeds<NEOPIXEL, LEDS_PIN>(leds, NUM_LEDS);
     FastLED.setBrightness(DEFAULT_BRIGHTNESS);

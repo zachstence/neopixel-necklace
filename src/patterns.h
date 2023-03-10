@@ -3,8 +3,13 @@
 #include <functional>
 
 #include "leds.h"
+#include "utils.h"
 #include "Patterns/Pattern.h"
+#include "Patterns/Pulse.h"
+#include "Patterns/Rezz.h"
+#include "Patterns/SinBounce.h"
 #include "Patterns/SolidColor.h"
+#include "Patterns/Strobe.h"
 #include "Patterns/Twinkle.h"
 
 typedef std::function<std::unique_ptr<Pattern>()> PatternFactory;
@@ -15,12 +20,64 @@ std::unique_ptr<T> make_unique(Args&&... args) {
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
+CHSV primaryColor = rgb2hsv_approximate(CRGB::SeaGreen);
+CHSV secondaryColor = rgb2hsv_approximate(CRGB::Amethyst);
+CHSV tertiaryColor = rgb2hsv_approximate(CRGB::PowderBlue);
+
 std::vector<PatternFactory> PATTERN_FACTORIES = {
+    [] {
+        return make_unique<Pulse>(
+            Pulse::Opts {
+                zones: rings,
+                numZones: numRings,
+                color: primaryColor,
+                direction: Direction::Forward,
+            }
+        );
+    },
+    [] {
+        return make_unique<Pulse>(
+            Pulse::Opts {
+                zones: rings,
+                numZones: numRings,
+                color: primaryColor,
+                direction: Direction::Backward,
+            }
+        );
+    },
+    [] {
+        return make_unique<Rezz>(
+            Rezz::Opts {
+                zones: rings,
+                numZones: numRings,
+                onColor: primaryColor,
+                offColor: CHSV(primaryColor.h, primaryColor.s, 50),
+            }
+        );
+    },
+    [] {
+        // TODO need to support multiple patterns at once so we can style zones differently
+        return make_unique<SinBounce>(
+            SinBounce::Opts {
+                leds: outer,
+                color: CHSV(primaryColor.h, primaryColor.s, 50),
+            }
+        );
+    },
     [] {
         return make_unique<SolidColor>(
             SolidColor::Opts {
                 leds,
-                color: CHSV(0, 255, 255),
+                color: primaryColor,
+            }
+        );
+    },
+    [] {
+        return make_unique<Strobe>(
+            Strobe::Opts {
+                leds,
+                bpm: 300,
+                color: primaryColor,
             }
         );
     },
@@ -28,7 +85,7 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
         return make_unique<Twinkle>(
             Twinkle::Opts {
                 leds,
-                color: CHSV(200, 255, 255),
+                color: primaryColor,
             }
         );
     },
