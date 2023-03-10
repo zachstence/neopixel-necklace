@@ -11,9 +11,14 @@ public:
         CHSV color;  
     };
 
-    SolidColor(Opts opts) : leds(opts.leds), color(opts.color) {}
+    SolidColor(Opts opts) : leds(opts.leds), color(opts.color) {
+        Serial.println("new SolidColor()");
+    }
 
     void run() override {
+        EVERY_N_SECONDS(1) {
+            Serial.println("SolidColor.run()");
+        }
         this->leds = color;
         FastLED.show();
     }

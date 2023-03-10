@@ -6,11 +6,9 @@
 #include "Patterns/Pattern.h"
 #include "Patterns/SolidColor.h"
 
-uint8_t patternIndex = 0;
-
 typedef std::function<std::unique_ptr<Pattern>()> PatternFactory;
 
-std::vector<PatternFactory> PATTERNS = {
+std::vector<PatternFactory> PATTERN_FACTORIES = {
     []() {
         return std::unique_ptr<Pattern>(
             new SolidColor(
@@ -43,11 +41,11 @@ std::vector<PatternFactory> PATTERNS = {
     },
 };
 
-void cyclePattern() {
-    patternIndex = (patternIndex + 1) % PATTERNS.size();
-    Serial.printf("patternIndex = %d\n", patternIndex);
-}
+uint8_t patternIndex = 0;
+std::unique_ptr<Pattern> currentPattern;
 
-PatternFactory currentPattern() {
-    return PATTERNS[patternIndex];
+void cyclePattern() {
+    patternIndex = (patternIndex + 1) % PATTERN_FACTORIES.size();
+    currentPattern = std::move(PATTERN_FACTORIES[patternIndex]());
+    Serial.printf("patternIndex = %d\n", patternIndex);
 }

@@ -25,6 +25,7 @@ public:
         leds(opts.leds),
         color(opts.color)
     {
+        Serial.println("new Twinkle()");
         this->specs = new TwinkleSpec[this->leds.len];
         for (auto i = 0; i < this->leds.len; i++) {
             this->specs[i] = this->randomTwinkleSpec();
@@ -36,6 +37,9 @@ public:
     }
 
     void run() {
+        EVERY_N_SECONDS(1) {
+            Serial.println("Twinkle.run()");
+        }
         for (auto i = 0; i < this->leds.len; i++) {
             uint8_t v = this->beat(i);
             this->leds[i] = CHSV(this->color.h, this->color.s, v);

@@ -10,11 +10,12 @@ OneButton button;
 void setup() {
     setupButton();
     setupLeds();
+
+    currentPattern = std::move(PATTERN_FACTORIES[0]());
 }
 
 void loop() {
-    auto pattern = currentPattern()();
-    pattern->run();
+    currentPattern->run();
 
     button.tick();
 }
