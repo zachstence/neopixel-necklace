@@ -4,7 +4,7 @@
 #include "Pattern.h"
 #include "../utils.h"
 
-class SolidColor : Pattern {
+class SolidColor : public Pattern {
 public:
     struct Opts {
         CRGBSet leds;
@@ -13,7 +13,7 @@ public:
 
     SolidColor(Opts opts) : leds(opts.leds), color(opts.color) {}
 
-    void run() {
+    void run() override {
         this->leds = color;
         FastLED.show();
     }

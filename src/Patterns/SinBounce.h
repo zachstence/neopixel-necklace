@@ -4,7 +4,7 @@
 #include "Pattern.h"
 #include "../utils.h"
 
-class SinBounce : Pattern {
+class SinBounce : public Pattern {
 public:
     struct Opts {
         CRGBSet leds;

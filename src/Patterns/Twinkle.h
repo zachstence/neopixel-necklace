@@ -5,7 +5,7 @@
 #include "Pattern.h"
 #include "../utils.h"
 
-class Twinkle : Pattern {
+class Twinkle : public Pattern {
 public:
     struct Opts {
         CRGBSet leds;
@@ -18,7 +18,6 @@ public:
 
         void debug() {
             Serial.printf("TwinkleSpec\n  offset: %d\n  bpm: %d\n", this->offset);
-
         }
     };
 

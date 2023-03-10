@@ -5,7 +5,7 @@
 #include "Pattern.h"
 #include "../utils.h"
 
-class Rezz : Pattern {
+class Rezz : public Pattern {
 public:
     struct Opts {
         CRGBSet *zones;

@@ -4,7 +4,7 @@
 #include "../Direction.h"
 #include "Pattern.h"
 
-class Pulse : Pattern {
+class Pulse : public Pattern {
 public:
     struct Opts {
         CRGBSet *zones;

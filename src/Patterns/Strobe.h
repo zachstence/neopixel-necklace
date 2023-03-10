@@ -2,7 +2,7 @@
 
 #include "Pattern.h"
 
-class Strobe : Pattern {
+class Strobe : public Pattern {
 public:
     struct Opts {
         CRGBSet leds;
