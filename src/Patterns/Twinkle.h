@@ -9,7 +9,7 @@ class Twinkle : public Pattern {
 public:
     struct Opts {
         CRGBSet leds;
-        CHSV color;
+        Palette palette;
     };
 
     struct TwinkleSpec {
@@ -21,8 +21,9 @@ public:
         }
     };
 
-    Twinkle(Opts opts): Pattern("Twinkle"), leds(opts.leds), color(opts.color) {
+    Twinkle(Opts opts): Pattern("Twinkle", opts.palette), leds(opts.leds) {
         Serial.println("Twinkle()");
+        this->setPalette(opts.palette);
         this->specs = new TwinkleSpec[this->leds.len];
         for (auto i = 0; i < this->leds.len; i++) {
             this->specs[i] = this->randomTwinkleSpec();
@@ -44,6 +45,10 @@ public:
         }
 
         FastLED.show();
+    }
+
+    void setPalette(Palette palette) {
+        this->color = palette.at(0);
     }
 
 protected:

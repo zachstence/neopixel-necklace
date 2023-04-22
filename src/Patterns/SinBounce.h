@@ -8,10 +8,10 @@ class SinBounce : public Pattern {
 public:
     struct Opts {
         CRGBSet leds;
-        CHSV color;  
+        Palette palette;
     };
 
-    SinBounce(Opts opts) : leds(opts.leds), color(opts.color) {}
+    SinBounce(Opts opts) : Pattern("SinBounce", opts.palette), leds(opts.leds) {}
 
     void run()  {
         auto top = 10;
@@ -24,6 +24,10 @@ public:
         fadeBrightnessBy(this->leds, 5);
 
         FastLED.show();
+    }
+
+    void setPalette(Palette palette) {
+        this->color = palette.at(0);
     }
 
 

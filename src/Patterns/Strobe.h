@@ -7,14 +7,15 @@ public:
     struct Opts {
         CRGBSet leds;
         int bpm;
-        CHSV color;
+        Palette palette;
     };
     
     Strobe(Opts opts):
+        Pattern("Strobe", opts.palette),
         leds(opts.leds),
-        bpm(opts.bpm),
-        color(opts.color)
+        bpm(opts.bpm)
     {
+        this->setPalette(opts.palette),
         this->periodMs = 60000 / this->bpm;
     }
 
@@ -30,6 +31,10 @@ public:
         }
 
         FastLED.show();
+    }
+
+    void setPalette(Palette palette) {
+        this->color = palette.at(0);
     }
 
 protected:

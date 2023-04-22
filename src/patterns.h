@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <memory>
 #include <functional>
@@ -20,9 +22,7 @@ std::unique_ptr<T> make_unique(Args&&... args) {
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
-CHSV primaryColor = rgb2hsv_approximate(CRGB::SeaGreen);
-CHSV secondaryColor = rgb2hsv_approximate(CRGB::Amethyst);
-CHSV tertiaryColor = rgb2hsv_approximate(CRGB::PowderBlue);
+Palette defaultPalette = { CHSV(0, 0, 255) };
 
 std::vector<PatternFactory> PATTERN_FACTORIES = {
     [] {
@@ -30,7 +30,7 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
             Pulse::Opts {
                 zones: rings,
                 numZones: numRings,
-                color: primaryColor,
+                palette: defaultPalette,
                 direction: Direction::Forward,
             }
         );
@@ -40,7 +40,7 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
             Pulse::Opts {
                 zones: rings,
                 numZones: numRings,
-                color: primaryColor,
+                palette: defaultPalette,
                 direction: Direction::Backward,
             }
         );
@@ -50,8 +50,7 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
             Rezz::Opts {
                 zones: rings,
                 numZones: numRings,
-                onColor: primaryColor,
-                offColor: CHSV(primaryColor.h, primaryColor.s, 50),
+                palette: defaultPalette,
             }
         );
     },
@@ -60,7 +59,7 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
         return make_unique<SinBounce>(
             SinBounce::Opts {
                 leds: outer,
-                color: CHSV(primaryColor.h, primaryColor.s, 50),
+                palette: defaultPalette,
             }
         );
     },
@@ -68,7 +67,7 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
         return make_unique<SolidColor>(
             SolidColor::Opts {
                 leds,
-                color: primaryColor,
+                palette: defaultPalette,
             }
         );
     },
@@ -77,7 +76,25 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
             Strobe::Opts {
                 leds,
                 bpm: 300,
-                color: primaryColor,
+                palette: defaultPalette,
+            }
+        );
+    },
+    [] {
+        return make_unique<Strobe>(
+            Strobe::Opts {
+                leds,
+                bpm: 600,
+                palette: defaultPalette,
+            }
+        );
+    },
+    [] {
+        return make_unique<Strobe>(
+            Strobe::Opts {
+                leds,
+                bpm: 1200,
+                palette: defaultPalette,
             }
         );
     },
@@ -85,17 +102,8 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
         return make_unique<Twinkle>(
             Twinkle::Opts {
                 leds,
-                color: primaryColor,
+                palette: defaultPalette,
             }
         );
     },
 };
-
-uint8_t patternIndex = 0;
-std::unique_ptr<Pattern> currentPattern;
-
-void cyclePattern() {
-    patternIndex = (patternIndex + 1) % PATTERN_FACTORIES.size();
-    currentPattern = PATTERN_FACTORIES[patternIndex]();
-    Serial.printf("patternIndex = %d\n", patternIndex);
-}

@@ -10,16 +10,15 @@ public:
     struct Opts {
         CRGBSet *zones;
         uint8_t numZones;
-        CHSV onColor;
-        CHSV offColor;
+        Palette palette;
     };
 
     Rezz(Opts opts):
+        Pattern("Rezz", opts.palette),
         zones(opts.zones),
-        numZones(opts.numZones),
-        onColor(opts.onColor),
-        offColor(opts.offColor)
+        numZones(opts.numZones)
     {
+        this->setPalette(opts.palette);
         for (auto i = 0; i < this->numZones; i++) {
             this->zoneLenLcm = lcm(this->zoneLenLcm, this->zones[i].len);
         }
@@ -52,6 +51,11 @@ public:
             }
         }
         FastLED.show();
+    }
+
+    void setPalette(Palette palette) {
+        this->onColor = palette.at(0);
+        this->offColor = CHSV(this->onColor.h, this->onColor.s, 50);
     }
 
 protected:

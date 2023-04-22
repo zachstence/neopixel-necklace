@@ -8,11 +8,12 @@ class SolidColor : public Pattern {
 public:
     struct Opts {
         CRGBSet leds;
-        CHSV color;  
+        Palette palette;  
     };
 
-    SolidColor(Opts opts) : Pattern("SolidColor"), leds(opts.leds), color(opts.color) {
+    SolidColor(Opts opts) : Pattern("SolidColor", opts.palette), leds(opts.leds) {
         Serial.println("SolidColor()");
+        this->setPalette(opts.palette);
     }
 
     void run() override {
@@ -21,6 +22,10 @@ public:
         }
         this->leds = color;
         FastLED.show();
+    }
+
+    void setPalette(Palette palette) {
+        this->color = palette.at(0);
     }
 
 private:

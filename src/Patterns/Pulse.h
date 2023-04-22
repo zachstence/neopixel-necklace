@@ -9,16 +9,18 @@ public:
     struct Opts {
         CRGBSet *zones;
         uint8_t numZones;
-        CHSV color;
+        Palette palette;
         Direction direction;
     };
 
     Pulse(Opts opts):
+        Pattern("Pulse", opts.palette),
         zones(opts.zones),
         numZones(opts.numZones),
-        color(opts.color),
         direction(opts.direction)
-    {}
+    {
+        this->setPalette(opts.palette);
+    }
 
     void run() {
         for (auto i = 0; i < this->numZones; i++) {
@@ -37,6 +39,10 @@ public:
         }
 
         FastLED.show();
+    }
+
+    void setPalette(Palette palette) {
+        this->color = palette.at(0);
     }
 
 protected:
