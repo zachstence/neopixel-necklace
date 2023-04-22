@@ -20,10 +20,11 @@ public:
     }
 
     void run() {
-        EVERY_N_MILLIS(this->periodMs) {
+        if (millis() >= this->nextToggle) {
             this->on = !this->on;
+            this->nextToggle = millis() + this->periodMs;
         }
-
+        
         if (this->on) {
             this->leds = this->color;
         } else {
@@ -45,4 +46,5 @@ protected:
 private:
     int periodMs;
     bool on = true;
+    int nextToggle = 0;
 };
