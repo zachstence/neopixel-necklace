@@ -7,7 +7,16 @@
 typedef std::vector<CHSV> Palette;
 
 std::vector<Palette> PALETTES = {
-    { CHSV(0, 0, 255), CHSV(0, 0, 170), CHSV(0, 0, 85) }, // Shades of white
-    { rgb2hsv_approximate(CRGB::Cyan), rgb2hsv_approximate(CRGB::Amethyst), rgb2hsv_approximate(CRGB::Aquamarine) },
-    { rgb2hsv_approximate(CRGB::OrangeRed), rgb2hsv_approximate(CRGB::Orange), rgb2hsv_approximate(CRGB::DeepPink) },
+    { CHSV(   0,   0, 255 ) }, // White
+    { CHSV(   0, 255, 255 ) }, // Red
+    { CHSV( 220, 255, 255 ) }, // Fuchsia
+    { CHSV( 200, 255, 255 ) }, // Lavender
+    { CHSV( 173, 255, 255 ) }, // Cobalt
+    { CHSV( 152, 255, 255 ) }, // Powder blue
+    { CHSV( 130, 255, 255 ) }, // Cyan
+    { CHSV( 113, 255, 255 ) }, // Sea foam
+    { CHSV(  88, 255, 255 ) }, // Lime
+    { CHSV(  41, 255, 255 ) }, // Yellow
+    { CHSV(  24, 255, 255 ) }, // Orange
+    { CHSV(  13, 255, 255 ) }, // Red-orange
 };
