@@ -13,6 +13,7 @@
 #include "Patterns/SolidColor.h"
 #include "Patterns/Strobe.h"
 #include "Patterns/Twinkle.h"
+#include "Patterns/Off.h"
 
 typedef std::function<std::unique_ptr<Pattern>()> PatternFactory;
 
@@ -104,6 +105,11 @@ std::vector<PatternFactory> PATTERN_FACTORIES = {
                 leds,
                 palette: defaultPalette,
             }
+        );
+    },
+    [] {
+        return make_unique<Off>(
+            Off::Opts { leds }
         );
     },
 };
